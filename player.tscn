@@ -27,10 +27,9 @@ animations = [{
 size = Vector2(92, 106)
 
 [node name="Player" type="Area2D"]
-position = Vector2(365, 294)
+position = Vector2(338, 248)
 monitoring = false
 script = ExtResource("1_qxt6e")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wutpq")
