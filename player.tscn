@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://q6d8su1x4qb0"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_qxt6e"]
+[ext_resource type="Texture2D" uid="uid://bnosihcweg0tu" path="res://assets/spaceship_flying.png" id="2_71ye5"]
+[ext_resource type="Texture2D" uid="uid://dkmy514iewrfo" path="res://assets/spaceship_idle.png" id="3_pabsk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wutpq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_71ye5")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pabsk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0k5y"]
+size = Vector2(92, 106)
+
+[node name="Player" type="Area2D"]
+position = Vector2(365, 294)
+monitoring = false
+script = ExtResource("1_qxt6e")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wutpq")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -20)
+shape = SubResource("RectangleShape2D_x0k5y")
