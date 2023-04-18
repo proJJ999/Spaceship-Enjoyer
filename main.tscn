@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf52wrvu25yjc"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_jmrt4"]
+[ext_resource type="PackedScene" uid="uid://q6d8su1x4qb0" path="res://player.tscn" id="2_2rbkg"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jmrt4")
+
+[node name="Player" parent="." instance=ExtResource("2_2rbkg")]
+
+[connection signal="bullet_shot" from="Player" to="." method="_on_player_bullet_shot"]

@@ -3,12 +3,21 @@ extends Area2D
 @export var player_speed = 400
 @export var radiant_speed = PI * 1.5
 
+signal bullet_shot(parent, bullet)
+
+@export var bullet_scene : PackedScene
+var cannon_switch = false
+var is_on_cooldown = false
+
 func _ready():
 	$AnimatedSprite2D.play("idle")
 
 func _process(delta):	
 	turn(delta)
 	move(delta)
+	if(not is_on_cooldown):
+		if(Input.is_action_pressed("shoot")):
+			shoot()
 
 func turn(delta):
 	var direction = 0
@@ -35,3 +44,21 @@ func move(delta):
 		$AnimatedSprite2D.play("flying")
 	else:
 		$AnimatedSprite2D.play("idle")
+
+func shoot():
+	is_on_cooldown = true
+	$BulletCooldown.start()
+	
+	var bullet = bullet_scene.instantiate()
+	var start
+	if(cannon_switch):
+		start = $BulletSpawnLeft.position
+	else:
+		start = $BulletSpawnRight.position
+	cannon_switch = not cannon_switch
+	bullet.position = start
+	bullet.rotation = rotation
+	bullet_shot.emit(self, bullet)
+	
+	await $BulletCooldown.timeout
+	is_on_cooldown = false
