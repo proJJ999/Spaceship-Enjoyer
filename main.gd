@@ -10,7 +10,6 @@ func _ready():
 func _process(delta):
 	pass
 
-
 func _on_player_bullet_shot(parent, bullet):
 	bullet.position = bullet.position.rotated(parent.rotation) + parent.global_position
 	add_child(bullet)

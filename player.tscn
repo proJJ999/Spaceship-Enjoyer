@@ -48,5 +48,5 @@ position = Vector2(50, -50)
 position = Vector2(-50, -50)
 
 [node name="BulletCooldown" type="Timer" parent="."]
-wait_time = 0.01
+wait_time = 0.1
 one_shot = true

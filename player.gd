@@ -58,6 +58,7 @@ func shoot():
 	cannon_switch = not cannon_switch
 	bullet.position = start
 	bullet.rotation = rotation
+	bullet.source_node =  self
 	bullet_shot.emit(self, bullet)
 	
 	await $BulletCooldown.timeout
