@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var player_speed = 400
+@export var player_speed = 200
 @export var radiant_speed = PI * 1.5
 
 signal bullet_shot(parent, bullet)
