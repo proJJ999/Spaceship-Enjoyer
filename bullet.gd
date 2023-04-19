@@ -13,5 +13,5 @@ func get_damage():
 
 
 func despawn(area):
-	if (area != source_node):
+	if (area != source_node && typeof(area) != typeof(self)):
 		queue_free()

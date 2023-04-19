@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var player_speed = 200
+@export var player_speed = 300
 @export var radiant_speed = PI * 1.5
 
 signal bullet_shot(parent, bullet)
@@ -58,8 +58,11 @@ func shoot():
 	cannon_switch = not cannon_switch
 	bullet.position = start
 	bullet.rotation = rotation
-	bullet.source_node =  self
+	bullet.source_node = self
 	bullet_shot.emit(self, bullet)
 	
 	await $BulletCooldown.timeout
 	is_on_cooldown = false
+	
+func get_damage():
+	return 0

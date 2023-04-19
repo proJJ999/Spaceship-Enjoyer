@@ -1,6 +1,7 @@
 extends Area2D
 
-var life = 10
+var life : int
+var MAX_LIFE = 10
 var BROKEN_THRESHHOLD = 5
 
 var target : Vector2
@@ -18,6 +19,7 @@ func _ready():
 	radiant_speed = PI / randi_range(4, 8)
 	radiant_direction = 1 - 2 * randi_range(0, 1)
 	target = position
+	life = MAX_LIFE
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,3 +57,6 @@ func updateLife(damage):
 		self.set_process(false)
 		await $AnimationPlayer.animation_finished
 		queue_free()
+		
+func get_damage():
+	return MAX_LIFE

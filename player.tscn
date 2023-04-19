@@ -46,7 +46,6 @@ metadata/_edit_group_ = true
 position = Vector2(0, 25)
 sprite_frames = SubResource("SpriteFrames_wutpq")
 animation = &"flying"
-frame_progress = 0.894202
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x0k5y")
