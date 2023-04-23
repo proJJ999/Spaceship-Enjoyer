@@ -18,16 +18,16 @@ var radiant_direction: int
 
 
 func _ready() -> void:
-	anim_player.play("full_life")
+	player_anim.play("full_life")
 	radiant_speed = PI / randi_range(4, 8)
 	radiant_direction = 1 - 2 * randi_range(0, 1)
 	target = position
 	life = MAX_LIFE
 
 
-func _on_damage_detector_body_entered(body: Node2D) -> void:
-	if body.is_in_group("damage_source_interface"):
-		var damage: int = body.get_damage()
+func _on_damage_detector_area_entered(area: Area2D) -> void:
+	if area.owner.is_in_group("damage_source_interface"):
+		var damage: int = area.owner.get_damage()
 		updateLife(damage)
 
 
@@ -51,11 +51,6 @@ func calc_new_target() -> Vector2:
 	return position + relative_target
 
 
-func _on_area_entered(area):
-	var damage = area.get_damage()
-	updateLife(damage)
-
-
 func updateLife(damage):
 	life -= damage
 	if (life <= BROKEN_THRESHHOLD):
@@ -66,9 +61,5 @@ func updateLife(damage):
 		player_anim.play("exploded")
 		anim_player.play("die")
 		self.set_physics_process(false)
-
-
-
-
 
 
