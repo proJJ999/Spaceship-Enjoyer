@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://efxd4exjl0iw"]
+
+[ext_resource type="Script" path="res://src/levels/level_template.gd" id="1_yqpeg"]
+[ext_resource type="PackedScene" uid="uid://d2j7qfcg8u6ib" path="res://src/agents/player.tscn" id="2_ho1vg"]
+[ext_resource type="PackedScene" uid="uid://d35j5wtrou3jb" path="res://src/entities/meteor.tscn" id="3_ngjhb"]
+
+[node name="level_template" type="Node"]
+script = ExtResource("1_yqpeg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0392157, 0.0509804, 0.356863, 0.72549)
+
+[node name="Player" parent="." instance=ExtResource("2_ho1vg")]
+
+[node name="Meteor" parent="." instance=ExtResource("3_ngjhb")]
+position = Vector2(896, 380)
+
+[node name="Meteor2" parent="." instance=ExtResource("3_ngjhb")]
+position = Vector2(684, 271)
+
+[node name="Meteor3" parent="." instance=ExtResource("3_ngjhb")]
+position = Vector2(888, 157)
+
+[connection signal="projectile_shot" from="Player" to="." method="_on_player_projectile_shot"]

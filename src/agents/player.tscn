@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://d2j7qfcg8u6ib"]
+
+[ext_resource type="Script" path="res://src/agents/player.gd" id="1_eepyc"]
+[ext_resource type="Texture2D" uid="uid://btdukyomb5u07" path="res://assets/spaceship_V2_flying_1.png" id="1_rai22"]
+[ext_resource type="Texture2D" uid="uid://kmpasb00swpc" path="res://assets/spaceship_V2_flying_2.png" id="2_lve3q"]
+[ext_resource type="PackedScene" uid="uid://bfvynflu5m65w" path="res://src/projeciles/bullet.tscn" id="2_rcjmd"]
+[ext_resource type="Texture2D" uid="uid://cyoy0sj3c1jj" path="res://assets/spaceship_V2_flying_3.png" id="3_0rnnr"]
+[ext_resource type="Texture2D" uid="uid://cyxk6lkc1e4mm" path="res://assets/spaceship_V2.png" id="4_x0i5x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hh177"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rai22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lve3q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0rnnr")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_x0i5x")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xswpn"]
+size = Vector2(70, 88)
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(338, 241)
+collision_mask = 14
+script = ExtResource("1_eepyc")
+projectile_scene = ExtResource("2_rcjmd")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 25)
+sprite_frames = SubResource("SpriteFrames_hh177")
+animation = &"flying"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xswpn")
+
+[node name="ProjectileSpawnRight" type="Marker2D" parent="."]
+position = Vector2(22, -22)
+
+[node name="ProjectileSpawnLeft" type="Marker2D" parent="."]
+position = Vector2(-22, -22)
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
