@@ -1,0 +1,195 @@
+[gd_scene load_steps=13 format=3 uid="uid://bb7cxy2mso2sw"]
+
+[ext_resource type="Script" path="res://src/entities/bomb.gd" id="1_uaa6c"]
+[ext_resource type="Texture2D" uid="uid://d3nw6vjm5gi7l" path="res://assets/bomb.png" id="2_4263h"]
+[ext_resource type="Shader" path="res://shaders/explode.gdshader" id="2_nv0rg"]
+[ext_resource type="Shader" path="res://shaders/shockwave_simple.gdshader" id="4_boh3t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0lcs"]
+shader = ExtResource("2_nv0rg")
+shader_parameter/cutoff_percentage = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ec6lx"]
+radius = 53.0094
+
+[sub_resource type="Animation" id="Animation_dec08"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/cutoff_percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageArea/CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [42.0119]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:material:shader_parameter/wave_spread")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:material:shader_parameter/opacity_loss")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_4ai3p"]
+resource_name = "explode"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/cutoff_percentage")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageArea/CollisionShape2D:shape:radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.01, 200.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:material:shader_parameter/wave_spread")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:material:shader_parameter/opacity_loss")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_30sue"]
+_data = {
+"RESET": SubResource("Animation_dec08"),
+"explode": SubResource("Animation_4ai3p")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6ivlu"]
+radius = 62.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ull4c"]
+radius = 42.0119
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkg6s"]
+shader = ExtResource("4_boh3t")
+shader_parameter/wave_spread = 0.0
+shader_parameter/wave_width = 0.101
+shader_parameter/opacity_loss = 1.0
+
+[node name="Bomb" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 8
+gravity_scale = 0.0
+script = ExtResource("1_uaa6c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_j0lcs")
+position = Vector2(-5, 2)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_4263h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_ec6lx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_30sue")
+}
+
+[node name="DamageDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector"]
+shape = SubResource("CircleShape2D_6ivlu")
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+scale = Vector2(1.25, 1.25)
+shape = SubResource("CircleShape2D_ull4c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_xkg6s")
+offset_left = -248.0
+offset_top = -248.0
+offset_right = 252.0
+offset_bottom = 252.0
+color = Color(0.454902, 0, 0, 1)
+
+[connection signal="area_entered" from="DamageDetector" to="." method="_on_damage_detector_area_entered"]
