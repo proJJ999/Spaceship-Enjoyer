@@ -1,4 +1,3 @@
-@tool
 extends CharacterBody2D
 
 signal projectile_shot(parent, projectile)
@@ -78,11 +77,3 @@ func shoot() -> void:
 	
 	await $ShootCooldown.timeout
 	is_on_cooldown = false
-
-
-func _get_configuration_warnings() -> PackedStringArray:
-	var errors: PackedStringArray = []
-	if not projectile_scene:
-		errors.append("A projecile scene has to be given")
-	return errors
-
