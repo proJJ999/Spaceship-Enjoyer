@@ -1,5 +1,4 @@
 extends Node
 
-func _on_player_projectile_shot(parent, projectile) -> void:
-	projectile.position = projectile.position.rotated(parent.rotation) + parent.global_position
+func _on_projectile_shot(parent, projectile) -> void:
 	add_child(projectile)

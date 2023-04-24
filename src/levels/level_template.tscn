@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://efxd4exjl0iw"]
+[gd_scene load_steps=4 format=3 uid="uid://efxd4exjl0iw"]
 
 [ext_resource type="Script" path="res://src/levels/level_template.gd" id="1_yqpeg"]
 [ext_resource type="PackedScene" uid="uid://d2j7qfcg8u6ib" path="res://src/agents/player.tscn" id="2_ho1vg"]
-[ext_resource type="PackedScene" uid="uid://d35j5wtrou3jb" path="res://src/entities/meteor.tscn" id="3_ngjhb"]
-[ext_resource type="PackedScene" uid="uid://bb7cxy2mso2sw" path="res://src/entities/bomb.tscn" id="4_3ylgc"]
+[ext_resource type="PackedScene" uid="uid://dbhig3m5rb3ha" path="res://src/agents/enemy_1.tscn" id="3_rlmmx"]
 
 [node name="level_template" type="Node"]
 script = ExtResource("1_yqpeg")
@@ -18,16 +17,8 @@ color = Color(0.0392157, 0.0509804, 0.356863, 0.72549)
 
 [node name="Player" parent="." instance=ExtResource("2_ho1vg")]
 
-[node name="Meteor" parent="." instance=ExtResource("3_ngjhb")]
-position = Vector2(896, 380)
+[node name="RigidBody2D" parent="." instance=ExtResource("3_rlmmx")]
+position = Vector2(720, 280)
 
-[node name="Meteor2" parent="." instance=ExtResource("3_ngjhb")]
-position = Vector2(684, 271)
-
-[node name="Meteor3" parent="." instance=ExtResource("3_ngjhb")]
-position = Vector2(888, 157)
-
-[node name="Bomb" parent="." instance=ExtResource("4_3ylgc")]
-position = Vector2(812, 274)
-
-[connection signal="projectile_shot" from="Player" to="." method="_on_player_projectile_shot"]
+[connection signal="projectile_shot" from="Player" to="." method="_on_projectile_shot"]
+[connection signal="projectile_shot" from="RigidBody2D" to="." method="_on_projectile_shot"]
