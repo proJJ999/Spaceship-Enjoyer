@@ -62,7 +62,22 @@ func shoot() -> void:
 	is_on_cooldown = true
 	$ShootCooldown.start()
 	
+	var projectile: Variant = create_projectile()
+	if projectile != null:
+		projectile_shot.emit(self, projectile)
+	
+	await $ShootCooldown.timeout
+	is_on_cooldown = false
+
+
+func create_projectile() -> Variant:
 	var projectile = projectile_scene.instantiate()
+	
+	if not projectile.is_in_group("projectile_interface"):
+		return null
+	
+	projectile.init_player_projectile()
+	
 	var start: Vector2
 	if(cannon_switch):
 		start = $ProjectileSpawnLeft.position
@@ -73,7 +88,5 @@ func shoot() -> void:
 	projectile.rotation = rotation
 	projectile.source_node = self
 	projectile.apply_central_impulse(velocity * 0.2)
-	projectile_shot.emit(self, projectile)
 	
-	await $ShootCooldown.timeout
-	is_on_cooldown = false
+	return projectile
