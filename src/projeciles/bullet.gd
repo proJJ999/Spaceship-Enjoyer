@@ -5,6 +5,7 @@ extends RigidBody2D
 var damage := 1
 var source_node : Node
 
+var animation: String
 
 func _init() -> void:
 	contact_monitor = true
@@ -14,6 +15,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	$AnimatedSprite2D.play(animation)
 	var impuls = Vector2.UP.rotated(rotation) * speed
 	apply_central_impulse(impuls)
 
@@ -25,10 +27,16 @@ func _on_body_entered(body: Node) -> void:
 	queue_free()
 
 
+func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
+	queue_free()
+
+
 func get_damage() -> int:
 	return damage
 
+
 func init_player_projectile() -> void:
+	animation = "player"
 	var player_mask := 0b0001
 	var enemy_mask := 0b1010
 	var entity_mask := 0b0100
@@ -39,7 +47,9 @@ func init_player_projectile() -> void:
 	damage_area.collision_layer = player_mask
 	damage_area.collision_mask = enemy_mask | entity_mask
 
+
 func init_enemy_projectile() -> void:
+	animation = "enemy"
 	var player_mask := 0b0001
 	var enemy_mask := 0b0010
 	var entity_mask := 0b0100
@@ -49,3 +59,4 @@ func init_enemy_projectile() -> void:
 	var damage_area: Area2D = $DamageArea
 	damage_area.collision_layer = enemy_mask
 	damage_area.collision_mask = player_mask
+
