@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://efxd4exjl0iw"]
+[gd_scene load_steps=6 format=3 uid="uid://efxd4exjl0iw"]
 
 [ext_resource type="Script" path="res://src/levels/level_template.gd" id="1_yqpeg"]
 [ext_resource type="PackedScene" uid="uid://d2j7qfcg8u6ib" path="res://src/agents/player.tscn" id="2_ho1vg"]
 [ext_resource type="PackedScene" uid="uid://dbhig3m5rb3ha" path="res://src/agents/enemy_1.tscn" id="3_rlmmx"]
+[ext_resource type="PackedScene" uid="uid://c66t0x76e6vwu" path="res://src/gui/hud.tscn" id="4_w777b"]
+[ext_resource type="PackedScene" uid="uid://bb7cxy2mso2sw" path="res://src/entities/bomb.tscn" id="5_t2cn5"]
 
 [node name="level_template" type="Node"]
 script = ExtResource("1_yqpeg")
@@ -20,5 +22,13 @@ color = Color(0.0392157, 0.0509804, 0.356863, 0.72549)
 [node name="RigidBody2D" parent="." instance=ExtResource("3_rlmmx")]
 position = Vector2(720, 280)
 
+[node name="Hud" parent="." instance=ExtResource("4_w777b")]
+
+[node name="Bomb" parent="." instance=ExtResource("5_t2cn5")]
+position = Vector2(664, 384)
+
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="player_took_damage" from="Player" to="." method="_on_player_player_took_damage"]
 [connection signal="projectile_shot" from="Player" to="." method="_on_projectile_shot"]
 [connection signal="projectile_shot" from="RigidBody2D" to="." method="_on_projectile_shot"]
+[connection signal="play_again" from="Hud" to="." method="_on_hud_play_again"]

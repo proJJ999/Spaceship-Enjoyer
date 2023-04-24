@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d2j7qfcg8u6ib"]
+[gd_scene load_steps=10 format=3 uid="uid://d2j7qfcg8u6ib"]
 
 [ext_resource type="Script" path="res://src/agents/player.gd" id="1_eepyc"]
 [ext_resource type="Texture2D" uid="uid://btdukyomb5u07" path="res://assets/spaceship_V2_flying_1.png" id="1_rai22"]
@@ -35,6 +35,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xswpn"]
 size = Vector2(70, 88)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb3vw"]
+size = Vector2(76, 94)
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(338, 241)
 collision_mask = 14
@@ -59,3 +62,12 @@ position = Vector2(-22, -22)
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
+
+[node name="DamageDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector"]
+shape = SubResource("RectangleShape2D_nb3vw")
+
+[connection signal="area_entered" from="DamageDetector" to="." method="_on_damage_detector_area_entered"]

@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://c66t0x76e6vwu"]
+
+[ext_resource type="Script" path="res://src/gui/hud.gd" id="1_ysy4k"]
+[ext_resource type="Texture2D" uid="uid://ddagkb3wnjrp0" path="res://assets/lifebar/lifebar_over.png" id="2_nem0r"]
+[ext_resource type="Texture2D" uid="uid://cenwm6n0y8tt7" path="res://assets/lifebar/lifebar_progress.png" id="3_y7kp6"]
+
+[node name="Hud" type="Control"]
+process_mode = 3
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ysy4k")
+
+[node name="Lifebar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+offset_right = 504.0
+offset_bottom = 102.0
+value = 100.0
+texture_over = ExtResource("2_nem0r")
+texture_progress = ExtResource("3_y7kp6")
+texture_progress_offset = Vector2(0, 15)
+
+[node name="PlayAgainButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.5
+offset_top = -52.5
+offset_right = 127.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "PLAY AGAIN"
+
+[connection signal="button_up" from="PlayAgainButton" to="." method="_on_play_again_button_up"]

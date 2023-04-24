@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 signal projectile_shot(parent, projectile)
+signal player_took_damage(percentage_life)
+signal player_died
 
 @export var player_speed := 300
 @export var radiant_speed := PI * 1.5
@@ -9,10 +11,20 @@ signal projectile_shot(parent, projectile)
 var cannon_switch := false
 var is_on_cooldown := false
 
+var MAX_LIFE := 5
+var life := MAX_LIFE
+
 @onready var player_anim: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("idle")
+
+
+func _on_damage_detector_area_entered(area: Area2D) -> void:
+	if area.owner.is_in_group("damage_source_interface"):
+		var damage: int = area.owner.get_damage()
+		updateLife(damage)
+
 
 func _physics_process(delta: float) -> void:	
 	rotation = calc_rotation(delta, rotation)
@@ -90,3 +102,13 @@ func create_projectile() -> Variant:
 	projectile.apply_central_impulse(velocity * 0.2)
 	
 	return projectile
+
+
+func updateLife(damage):
+	life -= damage
+	var percentage_life := float(life) / float(MAX_LIFE)
+	player_took_damage.emit(percentage_life)
+	if (life <= 0):
+		$CollisionShape2D.set_deferred("disabled", true)
+		player_died.emit()
+		queue_free()
