@@ -80,9 +80,9 @@ func create_projectile() -> Variant:
 	
 	var start: Vector2
 	if(cannon_switch):
-		start = $ProjectileSpawnLeft.position
+		start = $ProjectileSpawnLeft.global_position
 	else:
-		start = $ProjectileSpawnRight.position
+		start = $ProjectileSpawnRight.global_position
 	cannon_switch = not cannon_switch
 	projectile.position = start
 	projectile.rotation = rotation

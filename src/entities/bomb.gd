@@ -6,7 +6,7 @@ var life: int
 var radiant_speed: float
 var radiant_direction: int
 
-var damage := 20
+var explosion_damage := 20
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
@@ -42,6 +42,6 @@ func updateLife(damage):
 
 
 func get_damage() -> int:
-	return damage
+	return explosion_damage
 
 
